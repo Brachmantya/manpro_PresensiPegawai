@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Pemilik - Coffee Shop</title>
+  <link rel="stylesheet" href="ownerstyle.css">
+</head>
+<body>
+  <div class="owner-dashboard-container">
+    <header>
+      <h1>Dashboard Pemilik ☕</h1>
+    </header>
+    <main>
+      <!-- Informasi Pegawai -->
+      <section>
+        <h2>Informasi Pegawai</h2>
+        <div class="button-container">
+          <button class="primary-btn" onclick="openModal('employeeInfoModal')">Tambah Data Pegawai</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Nomor HP</th>
+              <th>Email</th>
+              <th>Posisi</th>
+              <th>Gaji Per Jam (Rp)</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="employeeInfoTable">
+            <tr>
+              <td>Ahmad</td>
+              <td>08123456789</td>
+              <td>ahmad@mail.com</td>
+              <td>Koki</td>
+              <td>50,000</td>
+              <td>
+                <button class="secondary-btn" onclick="editRow(this)">Edit</button>
+                <button class="danger-btn" onclick="deleteRow(this)">Hapus</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Siti</td>
+              <td>08129876543</td>
+              <td>siti@mail.com</td>
+              <td>Pelayan</td>
+              <td>30,000</td>
+              <td>
+                <button class="secondary-btn" onclick="editRow(this)">Edit</button>
+                <button class="danger-btn" onclick="deleteRow(this)">Hapus</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Laporan Kehadiran -->
+      <section>
+        <h2>Laporan Kehadiran Pegawai</h2>
+        <form onsubmit="generateAttendanceReport(event)">
+          <label for="attendanceStartDate">Dari Tanggal:</label>
+          <input type="date" id="attendanceStartDate">
+          <label for="attendanceEndDate">Hingga Tanggal:</label>
+          <input type="date" id="attendanceEndDate">
+          <button type="submit" class="primary-btn">Tampilkan Laporan</button>
+        </form>
+        <table>
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Tanggal</th>
+              <th>Waktu Masuk</th>
+              <th>Waktu Keluar</th>
+              <th>Durasi Kerja (Jam)</th>
+            </tr>
+          </thead>
+          <tbody id="attendanceReportResult"></tbody>
+        </table>
+      </section>
+
+      <!-- Laporan Gaji -->
+      <section>
+        <h2>Laporan Gaji Pegawai</h2>
+        <form onsubmit="generateSalaryReport(event)">
+          <label for="salaryStartDate">Dari Tanggal:</label>
+          <input type="date" id="salaryStartDate">
+          <label for="salaryEndDate">Hingga Tanggal:</label>
+          <input type="date" id="salaryEndDate">
+          <button type="submit" class="primary-btn">Tampilkan Laporan</button>
+        </form>
+        <table>
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Posisi</th>
+              <th>Jumlah Hari Kerja</th>
+              <th>Total Jam Kerja</th>
+              <th>Total Gaji (Rp)</th>
+            </tr>
+          </thead>
+          <tbody id="salaryReportResult"></tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal: Tambah Data Pegawai -->
+  <div id="employeeInfoModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('employeeInfoModal')">&times;</span>
+      <h3>Tambah/Edit Data Pegawai</h3>
+      <form id="employeeInfoForm" onsubmit="saveRow(event)">
+        <input type="hidden" id="rowIndex">
+        <label for="employeeName">Nama:</label>
+        <input type="text" id="employeeName" required>
+        <label for="employeePhone">Nomor HP:</label>
+        <input type="text" id="employeePhone" required>
+        <label for="employeeEmail">Email:</label>
+        <input type="email" id="employeeEmail" required>
+        <label for="employeePosition">Posisi:</label>
+        <input type="text" id="employeePosition" required>
+        <label for="salaryAmount">Gaji Per Jam (Rp):</label>
+        <input type="number" id="salaryAmount" required>
+        <button type="submit" class="primary-btn">Simpan</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Tambah atau edit data pegawai
+    function saveRow(event) {
+      event.preventDefault();
+      const rowIndex = document.getElementById("rowIndex").value;
+      const name = document.getElementById("employeeName").value;
+      const phone = document.getElementById("employeePhone").value;
+      const email = document.getElementById("employeeEmail").value;
+      const position = document.getElementById("employeePosition").value;
+      const salary = document.getElementById("salaryAmount").value;
+
+      if (rowIndex) {
+        // Edit data
+        const table = document.getElementById("employeeInfoTable");
+        const row = table.rows[rowIndex];
+        row.cells[0].textContent = name;
+        row.cells[1].textContent = phone;
+        row.cells[2].textContent = email;
+        row.cells[3].textContent = position;
+        row.cells[4].textContent = salary;
+      } else {
+        // Tambah data
+        const table = document.getElementById("employeeInfoTable");
+        const newRow = table.insertRow();
+        [name, phone, email, position, salary].forEach((value) => {
+          const cell = newRow.insertCell();
+          cell.textContent = value;
+        });
+        const actionCell = newRow.insertCell();
+        actionCell.innerHTML = `
+          <button class="secondary-btn" onclick="editRow(this)">Edit</button>
+          <button class="danger-btn" onclick="deleteRow(this)">Hapus</button>`;
+      }
+
+      document.getElementById("employeeInfoForm").reset();
+      closeModal("employeeInfoModal");
+    }
+
+    // Edit data pegawai
+    function editRow(button) {
+      const row = button.parentElement.parentElement;
+      const rowIndex = row.rowIndex - 1; // Adjust for header
+      document.getElementById("rowIndex").value = rowIndex;
+      document.getElementById("employeeName").value = row.cells[0].textContent;
+      document.getElementById("employeePhone").value = row.cells[1].textContent;
+      document.getElementById("employeeEmail").value = row.cells[2].textContent;
+      document.getElementById("employeePosition").value = row.cells[3].textContent;
+      document.getElementById("salaryAmount").value = row.cells[4].textContent;
+      openModal("employeeInfoModal");
+    }
+
+    // Hapus data pegawai
+    function deleteRow(button) {
+      const row = button.parentElement.parentElement;
+      row.remove();
+    }
+
+    // Modal
+    function openModal(id) {
+      document.getElementById(id).style.display = "block";
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
+
+    // Laporan Kehadiran
+    function generateAttendanceReport(event) {
+      event?.preventDefault();
+      const tbody = document.getElementById("attendanceReportResult");
+      tbody.innerHTML = `
+        <tr>
+          <td>Ahmad</td>
+          <td>2024-11-01</td>
+          <td>08:00</td>
+          <td>16:00</td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <td>Siti</td>
+          <td>2024-11-01</td>
+          <td>09:00</td>
+          <td>17:00</td>
+          <td>8</td>
+        </tr>`;
+    }
+
+    // Laporan Gaji
+    function generateSalaryReport(event) {
+      event?.preventDefault();
+      const tbody = document.getElementById("salaryReportResult");
+      tbody.innerHTML = `
+        <tr>
+          <td>Ahmad</td>
+          <td>Koki</td>
+          <td>20</td>
+          <td>160</td>
+          <td>8,000,000</td>
+        </tr>
+        <tr>
+          <td>Siti</td>
+          <td>Pelayan</td>
+          <td>20</td>
+          <td>160</td>
+          <td>4,800,000</td>
+        </tr>`;
+    }
+
+    // Generate laporan saat halaman dimuat
+    generateAttendanceReport();
+    generateSalaryReport();
+  </script>
+</body>
+</html>
