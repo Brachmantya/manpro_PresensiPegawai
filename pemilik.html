@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Pemilik - Coffee Shop</title>
+  <link rel="stylesheet" href="ownerstyle.css">
+  <style>
+    /* Efek tombol "x" */
+    .modal .close {
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .modal .close:hover {
+      transform: scale(1.2);
+    }
+
+    .modal .close:active {
+      transform: scale(1.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="owner-dashboard-container">
+    <header>
+      <h1>Dashboard Pemilik ☕</h1>
+      <button class="logout-btn" id="logoutButton" onclick="logout()">Logout</button>
+    </header>
+    <main>
+        <div class="user-info">
+            <p>Username: <strong id="displayUsername"></strong></p>
+            <p>Posisi: <strong id="displayRole"></strong></p>
+          </div>
+          
+      <!-- Kelola Data Posisi -->
+      <section>
+        <h2>Kelola Data Posisi/Jabatan Pegawai</h2>
+        <p>Tambah, edit, atau hapus posisi karyawan seperti koki, pelayan, kasir, atau bartender.</p>
+        <div class="button-container">
+          <button class="primary-btn" onclick="openModal('positionModal')">Tambah Posisi</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Posisi</th>
+              <th>Deskripsi</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="positionTable">
+            <tr>
+              <td>Koki</td>
+              <td>Bertanggung jawab atas masakan di dapur</td>
+              <td>
+                <button class="secondary-btn" onclick="editRow(this, 'position')">Edit</button>
+                <button class="danger-btn" onclick="deleteRow(this)">Hapus</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Pelayan</td>
+              <td>Melayani pelanggan di meja</td>
+              <td>
+                <button class="secondary-btn" onclick="editRow(this, 'position')">Edit</button>
+                <button class="danger-btn" onclick="deleteRow(this)">Hapus</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Kelola Data Diri Pegawai -->
+      <section>
+        <h2>Kelola Data Diri Pegawai</h2>
+        <p>Atur informasi karyawan seperti nama, nomor HP, email, dan alamat.</p>
+        <div class="button-container">
+          <button class="primary-btn" onclick="openModal('employeeModal')">Tambah Pegawai</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Nomor HP</th>
+              <th>Email</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="employeeTable">
+            <tr>
+              <td>Ahmad</td>
+              <td>08123456789</td>
+              <td>ahmad@mail.com</td>
+              <td>
+                <button class="secondary-btn" onclick="editRow(this, 'employee')">Edit</button>
+                <button class="danger-btn" onclick="deleteRow(this)">Hapus</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Siti</td>
+              <td>08129876543</td>
+              <td>siti@mail.com</td>
+              <td>
+                <button class="secondary-btn" onclick="editRow(this, 'employee')">Edit</button>
+                <button class="danger-btn" onclick="deleteRow(this)">Hapus</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Kelola Satuan Gaji -->
+      <section>
+        <h2>Kelola Satuan Gaji Pegawai</h2>
+        <p>Atur besaran gaji per jam untuk setiap posisi.</p>
+        <div class="button-container">
+          <button class="primary-btn" onclick="openModal('salaryModal')">Tambah Gaji</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Posisi</th>
+              <th>Gaji Per Jam</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="salaryTable">
+            <tr>
+              <td>Koki</td>
+              <td>50,000</td>
+              <td>
+                <button class="secondary-btn" onclick="editRow(this, 'salary')">Edit</button>
+                <button class="danger-btn" onclick="deleteRow(this)">Hapus</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Pelayan</td>
+              <td>30,000</td>
+              <td>
+                <button class="secondary-btn" onclick="editRow(this, 'salary')">Edit</button>
+                <button class="danger-btn" onclick="deleteRow(this)">Hapus</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Fitur Laporan -->
+      <section>
+        <h2>Lihat Laporan Kehadiran</h2>
+        <p>Lihat laporan kehadiran untuk rentang waktu tertentu.</p>
+        <button class="primary-btn" onclick="openModal('attendanceReportModal')">Lihat Laporan Kehadiran</button>
+      </section>
+      <section>
+        <h2>Lihat Laporan Gaji Pegawai</h2>
+        <p>Lihat laporan perhitungan gaji pegawai berdasarkan data kerja.</p>
+        <button class="primary-btn" onclick="openModal('salaryReportModal')">Lihat Laporan Gaji</button>
+      </section>
+    </main>
+  </div>
+
+<!-- Modal: Kelola Posisi -->
+<div id="positionModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('positionModal')">&times;</span>
+    <h3>Tambah Posisi</h3>
+    <form id="positionForm" class="form-vertical" onsubmit="saveRow(event, 'position')">
+      <div class="form-group">
+        <label for="positionName">Nama Posisi:</label>
+        <input type="text" id="positionName" placeholder="Masukkan nama posisi" required>
+      </div>
+      <div class="form-group">
+        <label for="positionDescription">Deskripsi Posisi:</label>
+        <textarea id="positionDescription" placeholder="Deskripsikan posisi" required></textarea>
+      </div>
+      <button type="submit" class="primary-btn">Simpan</button>
+    </form>
+  </div>
+</div>
+
+
+
+  <!-- Modal: Kelola Data Pegawai -->
+  <div id="employeeModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('employeeModal')">&times;</span>
+      <h3>Kelola Data Pegawai</h3>
+      <form onsubmit="saveRow(event, 'employee')">
+        <label for="employeeName">Nama:</label>
+        <input type="text" id="employeeName" placeholder="Masukkan nama pegawai" required>
+        <label for="employeePhone">Nomor HP:</label>
+        <input type="text" id="employeePhone" placeholder="Masukkan nomor HP" required>
+        <label for="employeeEmail">Email:</label>
+        <input type="email" id="employeeEmail" placeholder="Masukkan email" required>
+        <button type="submit" class="primary-btn">Simpan</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Tambah Gaji -->
+  <div id="salaryModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('salaryModal')">&times;</span>
+      <h3>Tambah Satuan Gaji</h3>
+      <form onsubmit="saveRow(event, 'salary')">
+        <label for="salaryPosition">Nama Posisi:</label>
+        <input type="text" id="salaryPosition" placeholder="Masukkan nama posisi" required>
+        <label for="salaryAmount">Gaji Per Jam (Rp):</label>
+        <input type="number" id="salaryAmount" placeholder="Masukkan gaji per jam" required>
+        <button type="submit" class="primary-btn">Simpan</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Laporan Kehadiran -->
+  <div id="attendanceReportModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('attendanceReportModal')">&times;</span>
+      <h3>Laporan Kehadiran</h3>
+      <form onsubmit="generateAttendanceReport(event)">
+        <label for="attendanceStartDate">Dari Tanggal:</label>
+        <input type="date" id="attendanceStartDate" required>
+        <label for="attendanceEndDate">Hingga Tanggal:</label>
+        <input type="date" id="attendanceEndDate" required>
+        <button type="submit" class="primary-btn">Tampilkan Laporan</button>
+      </form>
+      <div id="attendanceReportResult" class="report-result"></div>
+    </div>
+  </div>
+
+  <!-- Modal: Laporan Gaji -->
+  <div id="salaryReportModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('salaryReportModal')">&times;</span>
+      <h3>Laporan Gaji Pegawai</h3>
+      <form onsubmit="generateSalaryReport(event)">
+        <label for="salaryStartDate">Dari Tanggal:</label>
+        <input type="date" id="salaryStartDate" required>
+        <label for="salaryEndDate">Hingga Tanggal:</label>
+        <input type="date" id="salaryEndDate" required>
+        <button type="submit" class="primary-btn">Tampilkan Laporan</button>
+      </form>
+      <div id="salaryReportResult" class="report-result"></div>
+    </div>
+  </div>
+
+  <script>
+    // Ambil data dari local storage
+// const username = localStorage.getItem("username");
+// const role = localStorage.getItem("role");
+
+// Ambil data dari localStorage
+document.addEventListener("DOMContentLoaded", function () {
+  const username = localStorage.getItem("username") || "Guest";
+  const role = localStorage.getItem("role") || "Tidak diketahui";
+
+  // Masukkan data ke elemen HTML
+  document.getElementById("displayUsername").textContent = username;
+  document.getElementById("displayRole").textContent = role;
+});
+
+// Tampilkan data di halaman
+document.addEventListener("DOMContentLoaded", function () {
+  const container = document.createElement("div");
+  container.innerHTML = `
+    <p>Username: <strong>${username}</strong></p>
+    <p>Posisi: <strong>${role}</strong></p>
+  `;
+  document.body.prepend(container);
+});
+
+    // Fungsi Logout
+    function logout() {
+      window.location.href = 'index.html';
+    }
+
+    // Open Modal
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = 'block';
+    }
+
+    // Close Modal
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
+    // Save Row
+    function saveRow(event, type) {
+      event.preventDefault();
+
+      let table, inputs;
+      if (type === 'position') {
+        table = document.getElementById('positionTable');
+        const name = document.getElementById('positionName').value;
+        const desc = document.getElementById('positionDescription').value;
+        inputs = [name, desc];
+      } else if (type === 'employee') {
+        table = document.getElementById('employeeTable');
+        const name = document.getElementById('employeeName').value;
+        const phone = document.getElementById('employeePhone').value;
+        const email = document.getElementById('employeeEmail').value;
+        inputs = [name, phone, email];
+      } else if (type === 'salary') {
+        table = document.getElementById('salaryTable');
+        const position = document.getElementById('salaryPosition').value;
+        const salary = document.getElementById('salaryAmount').value;
+        inputs = [position, salary];
+      }
+
+      const newRow = document.createElement('tr');
+      inputs.forEach(input => {
+        const td = document.createElement('td');
+        td.textContent = input;
+        newRow.appendChild(td);
+      });
+
+      const actionTd = document.createElement('td');
+      actionTd.innerHTML = `
+        <button class="secondary-btn" onclick="editRow(this, '${type}')">Edit</button>
+        <button class="danger-btn" onclick="deleteRow(this)">Hapus</button>`;
+      newRow.appendChild(actionTd);
+
+      table.appendChild(newRow);
+      closeModal(type + 'Modal');
+    }
+
+    // Delete Row
+    function deleteRow(button) {
+      const row = button.closest('tr');
+      row.remove();
+    }
+
+    // Edit Row
+    function editRow(button, type) {
+      const row = button.closest('tr');
+      const cells = row.querySelectorAll('td');
+
+      if (type === 'position') {
+        document.getElementById('positionName').value = cells[0].textContent;
+        document.getElementById('positionDescription').value = cells[1].textContent;
+        openModal('positionModal');
+      } else if (type === 'employee') {
+        document.getElementById('employeeName').value = cells[0].textContent;
+        document.getElementById('employeePhone').value = cells[1].textContent;
+        document.getElementById('employeeEmail').value = cells[2].textContent;
+        openModal('employeeModal');
+      } else if (type === 'salary') {
+        document.getElementById('salaryPosition').value = cells[0].textContent;
+        document.getElementById('salaryAmount').value = cells[1].textContent.replace(/,/g, '');
+        openModal('salaryModal');
+      }
+    }
+
+    // Generate Attendance Report
+    function generateAttendanceReport(event) {
+      event.preventDefault();
+      const startDate = document.getElementById('attendanceStartDate').value;
+      const endDate = document.getElementById('attendanceEndDate').value;
+
+      const report = `
+        <p>Laporan Kehadiran</p>
+        <p>Rentang Waktu: <strong>${startDate}</strong> - <strong>${endDate}</strong></p>
+        <ul>
+          <li>Ahmad: Hadir 20 hari</li>
+          <li>Siti: Hadir 18 hari</li>
+        </ul>
+      `;
+      document.getElementById('attendanceReportResult').innerHTML = report;
+    }
+
+    // Generate Salary Report
+    function generateSalaryReport(event) {
+      event.preventDefault();
+      const startDate = document.getElementById('salaryStartDate').value;
+      const endDate = document.getElementById('salaryEndDate').value;
+
+      const report = `
+        <p>Laporan Gaji Pegawai</p>
+        <p>Rentang Waktu: <strong>${startDate}</strong> - <strong>${endDate}</strong></p>
+        <table>
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Posisi</th>
+              <th>Gaji Total (Rp)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ahmad</td>
+              <td>Koki</td>
+              <td>10,000,000</td>
+            </tr>
+            <tr>
+              <td>Siti</td>
+              <td>Pelayan</td>
+              <td>8,000,000</td>
+            </tr>
+          </tbody>
+        </table>
+      `;
+      document.getElementById('salaryReportResult').innerHTML = report;
+    }
+    function saveRow(event, type) {
+  event.preventDefault();
+
+  let table, inputs;
+  if (type === 'position') {
+    table = document.getElementById('positionTable');
+    const name = document.getElementById('positionName').value;
+    const desc = document.getElementById('positionDescription').value;
+    inputs = [name, desc];
+  }
+
+  const newRow = document.createElement('tr');
+  inputs.forEach(input => {
+    const td = document.createElement('td');
+    td.textContent = input;
+    newRow.appendChild(td);
+  });
+
+  const actionTd = document.createElement('td');
+  actionTd.innerHTML = `
+    <button class="secondary-btn" onclick="editRow(this, '${type}')">Edit</button>
+    <button class="danger-btn" onclick="deleteRow(this)">Hapus</button>`;
+  newRow.appendChild(actionTd);
+
+  table.appendChild(newRow);
+
+  // Reset input setelah berhasil disimpan
+  document.getElementById('positionForm').reset();
+
+  closeModal(type + 'Modal');
+}
+
+  </script>
+</body>
+</html>

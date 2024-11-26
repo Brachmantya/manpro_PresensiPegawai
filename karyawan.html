@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Karyawan - Coffee Shop</title>
+  <link rel="stylesheet" href="employeestyle.css">
+</head>
+<body>
+  <div class="employee-dashboard-container">
+    <header>
+      <h1>Dashboard Karyawan ☕</h1>
+      <button class="logout-btn" id="logoutButton">Logout</button>
+    </header>
+    <main>
+        <div class="user-info">
+            <p>Username: <strong id="displayUsername"></strong></p>
+            <p>Posisi: <strong id="displayRole"></strong></p>
+          </div>
+          
+      <!-- Absen Masuk/Pulang -->
+      <section>
+        <h2>Absen Masuk / Pulang</h2>
+        <form id="attendanceForm">
+          <div class="input-group">
+            <label for="phoneNumber">Nomor HP</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Masukkan nomor HP" required>
+          </div>
+          <button type="submit">Submit Absen</button>
+        </form>
+        <div id="attendanceMessage"></div>
+      </section>
+
+      <!-- Laporan Kehadiran dan Gaji -->
+      <section>
+        <h2>Laporan Kehadiran dan Gaji</h2>
+        <button onclick="viewAttendanceReport()">Lihat Laporan</button>
+        <div id="reportMessage"></div>
+      </section>
+      <section>
+  <h2>Pengajuan Cuti</h2>
+  <form id="leaveRequestForm">
+    <div class="input-group">
+      <label for="startDate">Tanggal Mulai</label>
+      <input type="date" id="startDate" name="startDate" required>
+    </div>
+    <div class="input-group">
+      <label for="endDate">Tanggal Selesai</label>
+      <input type="date" id="endDate" name="endDate" required>
+    </div>
+    <div class="input-group">
+      <label for="reason">Alasan Cuti</label>
+      <textarea id="reason" name="reason" placeholder="Jelaskan alasan cuti Anda" rows="4" required></textarea>
+    </div>
+    <button type="submit">Ajukan Cuti</button>
+  </form>
+  <div id="leaveRequestMessage"></div>
+</section>
+
+    </main>
+  </div>
+  <script>
+    // Ambil data dari localStorage
+document.addEventListener("DOMContentLoaded", function () {
+  const username = localStorage.getItem("username") || "Guest";
+  const role = localStorage.getItem("role") || "Tidak diketahui";
+
+  // Masukkan data ke elemen HTML
+  document.getElementById("displayUsername").textContent = username;
+  document.getElementById("displayRole").textContent = role;
+});
+
+    // Tampilkan data di halaman
+    document.addEventListener("DOMContentLoaded", function () {
+      const headerElement = document.querySelector("header h1");
+      headerElement.innerHTML += `<br><small>Welcome, ${username} (${role})</small>`;
+    });
+
+    // Submit attendance
+    document.getElementById("attendanceForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const phoneNumber = document.getElementById("phoneNumber").value;
+      document.getElementById("attendanceMessage").innerHTML = `
+        <p>Absen berhasil untuk nomor HP: <strong>${phoneNumber}</strong></p>
+      `;
+    });
+
+    // View attendance report
+    function viewAttendanceReport() {
+      document.getElementById("reportMessage").innerHTML = `
+        <p>Laporan Kehadiran: 5 hari minggu ini.</p>
+        <p>Estimasi Gaji Minggu Ini: Rp 500,000.</p>
+      `;
+    }
+
+    // Logout functionality
+    document.getElementById("logoutButton").addEventListener("click", function () {
+      localStorage.clear();
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>
