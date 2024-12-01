@@ -78,7 +78,12 @@ body {
     margin-bottom: 10px;
     color: #4a3f35;
   }
-  
+  section {
+    display: flex;
+    justify-content: space-between; /* Menyusun tombol agar bersebelahan */
+    gap: 10px; /* Memberikan jarak antar tombol */
+  }
+
   section button {
     padding: 10px 15px;
     font-size: 16px;
@@ -88,6 +93,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.2s ease;
+    width: 48%; /* Membatasi lebar tombol agar tidak terlalu besar */
   }
   
   section button:hover {
@@ -98,6 +104,12 @@ body {
   section button:active {
     background: #8b4513;
     transform: scale(0.95);
+  }
+  
+  /* Layout tambahan untuk Presensi Section */
+  section button:disabled {
+    background: #d3d3d3; /* Warna tombol ketika dinonaktifkan */
+    cursor: not-allowed; /* Cursor tidak bisa diklik */
   }
   
   .input-group {
@@ -225,6 +237,10 @@ section {
   display: flex;
   flex-direction: column;
   gap: 15px; /* Jarak antar elemen di dalam section */
+}
+
+#presensi{
+  flex-direction: row;
 }
 
 /* Title of Each Section */

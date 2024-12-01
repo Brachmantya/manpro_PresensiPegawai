@@ -19,9 +19,10 @@
       </div>
 
       <!-- Absen Masuk/Pulang -->
-      <section>
+      <section id="presensi">
         <h2>Presensi</h2>
-        <button id="attendanceButton">Klik untuk Presensi</button>
+        <button id="checkInButton">Presensi Masuk</button>
+        <button id="checkOutButton" disabled>Presensi Pulang</button>
         <div id="attendanceMessage"></div>
       </section>
 
@@ -45,6 +46,7 @@
       </section>
     </main>
   </div>
+
   <script>
     // Ambil data dari localStorage
     document.addEventListener("DOMContentLoaded", function () {
@@ -57,12 +59,50 @@
 
       // Tampilkan laporan kehadiran
       loadAttendanceReport();
+
+      // Atur waktu presensi
+      setupPresensiButtons();
     });
 
-    // Submit attendance
-    document.getElementById("attendanceButton").addEventListener("click", function () {
-      const message = "Presensi berhasil pada " + new Date().toLocaleString();
+    // Fungsi untuk mengatur tombol Presensi berdasarkan waktu
+    function setupPresensiButtons() {
+      const currentTime = new Date();
+      const currentHour = currentTime.getHours();
+      const currentMinutes = currentTime.getMinutes();
+      const checkInButton = document.getElementById("checkInButton");
+      const checkOutButton = document.getElementById("checkOutButton");
+
+      // Presensi Masuk hanya bisa dilakukan antara jam 08:00 hingga 08:15
+      if (currentHour === 8 && currentMinutes >= 0 && currentMinutes <= 15) {
+        checkInButton.disabled = false;
+      } else {
+        checkInButton.disabled = true;
+      }
+
+      // Presensi Pulang hanya bisa dilakukan antara jam 16:00 hingga 16:15
+      if (currentHour === 16 && currentMinutes >= 0 && currentMinutes <= 15) {
+        checkOutButton.disabled = false;
+      } else {
+        checkOutButton.disabled = true;
+      }
+    }
+
+    // Fungsi untuk Presensi Masuk
+    document.getElementById("checkInButton").addEventListener("click", function () {
+      const message = "Presensi Masuk berhasil pada " + new Date().toLocaleString();
       document.getElementById("attendanceMessage").innerHTML = `<p>${message}</p>`;
+      // Nonaktifkan tombol presensi masuk setelah presensi
+      document.getElementById("checkInButton").disabled = true;
+      // Aktifkan tombol presensi pulang
+      document.getElementById("checkOutButton").disabled = false;
+    });
+
+    // Fungsi untuk Presensi Pulang
+    document.getElementById("checkOutButton").addEventListener("click", function () {
+      const message = "Presensi Pulang berhasil pada " + new Date().toLocaleString();
+      document.getElementById("attendanceMessage").innerHTML = `<p>${message}</p>`;
+      // Nonaktifkan tombol presensi pulang setelah presensi
+      document.getElementById("checkOutButton").disabled = true;
     });
 
     // Load attendance report and salary
