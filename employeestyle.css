@@ -1,0 +1,342 @@
+/* Body Style */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f7f0e5, #e7dac9); /* Gradasi krem */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  /* Employee Dashboard Container */
+  .employee-dashboard-container {
+    background: #ffffff;
+    color: #4a3f35;
+    padding: 25px 35px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    max-width: 700px;
+    width: 100%;
+    position: relative;
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+  }
+  
+  header h1 {
+    font-size: 26px;
+    color: #4a3f35;
+    margin: 0;
+  }
+  
+  header .logout-btn {
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    background: #d2691e;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  header .logout-btn:hover {
+    background: #a0522d;
+    transform: scale(1.05);
+  }
+  
+  header .logout-btn:active {
+    background: #8b4513;
+    transform: scale(0.95);
+  }
+  
+  main {
+    margin-top: 20px;
+  }
+  
+  section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fafafa;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  section h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #4a3f35;
+  }
+  section {
+    display: flex;
+    justify-content: space-between; /* Menyusun tombol agar bersebelahan */
+    gap: 10px; /* Memberikan jarak antar tombol */
+  }
+
+  section button {
+    padding: 10px 15px;
+    font-size: 16px;
+    background: #d2691e;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    width: 48%; /* Membatasi lebar tombol agar tidak terlalu besar */
+  }
+  
+  section button:hover {
+    background: #a0522d;
+    transform: scale(1.05);
+  }
+  
+  section button:active {
+    background: #8b4513;
+    transform: scale(0.95);
+  }
+  
+  /* Layout tambahan untuk Presensi Section */
+  section button:disabled {
+    background: #d3d3d3; /* Warna tombol ketika dinonaktifkan */
+    cursor: not-allowed; /* Cursor tidak bisa diklik */
+  }
+  
+  .input-group {
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  
+  .input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #4a3f35;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    background: #fff;
+    color: #333;
+  }
+  
+  #attendanceMessage,
+  #reportMessage {
+    margin-top: 15px;
+    color: #4a3f35;
+    font-size: 16px;
+    background: #f7f0e5;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+  .user-info {
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    color: #4a3f35;
+    font-size: 20px;
+ 
+  }
+  
+  .user-info p {
+    margin: 10px 0; /* Tambahkan margin antar paragraf */
+  }
+  /* Text Fields for Employee Dashboard */
+.input-group input[type="text"],
+.input-group textarea {
+  width: 300px; /* Lebar fix */
+  max-width: 300px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  background: #fff;
+  color: #333;
+}
+/* General Layout for Employee Dashboard */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Rata kiri */
+  margin-bottom: 20px;
+}
+
+/* Text Fields Styling */
+.input-group label {
+  font-weight: bold;
+  margin-bottom: 8px; /* Jarak antara label dan input */
+  color: #4a3f35;
+}
+
+.input-group input[type="text"],
+.input-group textarea {
+  width: 100%;
+  max-width: 300px; /* Lebar fix */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  background: #fff;
+  color: #333;
+}
+
+textarea {
+  resize: none; /* Nonaktifkan resize */
+  height: 100px; /* Tinggi fix */
+}
+
+/* Form Button */
+button[type="submit"] {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #d2691e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #a0522d;
+}
+/* General Layout for Owner Dashboard */
+.owner-dashboard-container {
+  display: flex;
+  flex-direction: column; /* Susunan vertikal */
+  gap: 20px; /* Jarak antar section */
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling Section */
+section {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fafafa;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Jarak antar elemen di dalam section */
+}
+
+#presensi{
+  flex-direction: row;
+}
+
+/* Title of Each Section */
+section h2 {
+  font-size: 20px;
+  color: #4a3f35;
+  margin-bottom: 10px;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+table th,
+table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+table th {
+  background: #d2691e;
+  color: white;
+  font-weight: bold;
+}
+
+table td {
+  background: #ffffff;
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* Tombol rata kanan */
+  gap: 10px;
+}
+
+/* Buttons */
+.primary-btn {
+  padding: 10px 15px;
+  font-size: 14px;
+  background: #d2691e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.primary-btn:hover {
+  background: #a0522d;
+}
+
+.secondary-btn {
+  padding: 8px 12px;
+  font-size: 12px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.danger-btn {
+  padding: 8px 12px;
+  font-size: 12px;
+  background: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Modal Styling */
+.modal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 50%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Jarak antar elemen di dalam modal */
+}
+

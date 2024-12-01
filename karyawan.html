@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Karyawan - Coffee Shop</title>
+  <link rel="stylesheet" href="employeestyle.css">
+</head>
+<body>
+  <div class="employee-dashboard-container">
+    <header>
+      <h1>Dashboard Karyawan ☕</h1>
+      <button class="logout-btn" id="logoutButton">Logout</button>
+    </header>
+    <main>
+      <div class="user-info">
+        <p>Nama: <strong id="displayUsername"></strong></p>
+        <p>Nomor HP: <strong id="displayPhone"></strong></p>
+      </div>
+
+      <!-- Absen Masuk/Pulang -->
+      <section id="presensi">
+        <h2>Presensi</h2>
+        <button id="checkInButton">Presensi Masuk</button>
+        <button id="checkOutButton" disabled>Presensi Pulang</button>
+        <div id="attendanceMessage"></div>
+      </section>
+
+      <!-- Laporan Kehadiran dan Gaji -->
+      <section>
+        <h2>Laporan Kehadiran dan Gaji</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>Waktu Masuk</th>
+              <th>Waktu Keluar</th>
+              <th>Durasi Kerja (Jam)</th>
+            </tr>
+          </thead>
+          <tbody id="attendanceReportTable">
+            <!-- Data laporan akan ditambahkan di sini -->
+          </tbody>
+        </table>
+        <p id="salaryEstimate"></p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Ambil data dari localStorage
+    document.addEventListener("DOMContentLoaded", function () {
+      const username = localStorage.getItem("username") || "Guest";
+      const phone = localStorage.getItem("phone") || "Tidak diketahui";
+
+      // Masukkan data ke elemen HTML
+      document.getElementById("displayUsername").textContent = username;
+      document.getElementById("displayPhone").textContent = phone;
+
+      // Tampilkan laporan kehadiran
+      loadAttendanceReport();
+
+      // Atur waktu presensi
+      setupPresensiButtons();
+    });
+
+    // Fungsi untuk mengatur tombol Presensi berdasarkan waktu
+    function setupPresensiButtons() {
+      const currentTime = new Date();
+      const currentHour = currentTime.getHours();
+      const currentMinutes = currentTime.getMinutes();
+      const checkInButton = document.getElementById("checkInButton");
+      const checkOutButton = document.getElementById("checkOutButton");
+
+      // Presensi Masuk hanya bisa dilakukan antara jam 08:00 hingga 08:15
+      if (currentHour === 8 && currentMinutes >= 0 && currentMinutes <= 15) {
+        checkInButton.disabled = false;
+      } else {
+        checkInButton.disabled = true;
+      }
+
+      // Presensi Pulang hanya bisa dilakukan antara jam 16:00 hingga 16:15
+      if (currentHour === 16 && currentMinutes >= 0 && currentMinutes <= 15) {
+        checkOutButton.disabled = false;
+      } else {
+        checkOutButton.disabled = true;
+      }
+    }
+
+    // Fungsi untuk Presensi Masuk
+    document.getElementById("checkInButton").addEventListener("click", function () {
+      const message = "Presensi Masuk berhasil pada " + new Date().toLocaleString();
+      document.getElementById("attendanceMessage").innerHTML = `<p>${message}</p>`;
+      // Nonaktifkan tombol presensi masuk setelah presensi
+      document.getElementById("checkInButton").disabled = true;
+      // Aktifkan tombol presensi pulang
+      document.getElementById("checkOutButton").disabled = false;
+    });
+
+    // Fungsi untuk Presensi Pulang
+    document.getElementById("checkOutButton").addEventListener("click", function () {
+      const message = "Presensi Pulang berhasil pada " + new Date().toLocaleString();
+      document.getElementById("attendanceMessage").innerHTML = `<p>${message}</p>`;
+      // Nonaktifkan tombol presensi pulang setelah presensi
+      document.getElementById("checkOutButton").disabled = true;
+    });
+
+    // Load attendance report and salary
+    function loadAttendanceReport() {
+      const reportData = [
+        { date: "2024-11-20", checkIn: "08:00", checkOut: "16:00", duration: 8 },
+        { date: "2024-11-21", checkIn: "08:15", checkOut: "16:05", duration: 7.83 },
+        { date: "2024-11-22", checkIn: "08:05", checkOut: "15:55", duration: 7.83 },
+        { date: "2024-11-23", checkIn: "08:10", checkOut: "16:00", duration: 7.83 },
+        { date: "2024-11-24", checkIn: "08:00", checkOut: "15:50", duration: 7.83 }
+      ];
+
+      const tableBody = document.getElementById("attendanceReportTable");
+      tableBody.innerHTML = ""; // Kosongkan tabel sebelum menambahkan data
+
+      let totalHours = 0;
+      reportData.forEach((record) => {
+        const row = `<tr>
+          <td>${record.date}</td>
+          <td>${record.checkIn}</td>
+          <td>${record.checkOut}</td>
+          <td>${record.duration.toFixed(2)}</td>
+        </tr>`;
+        tableBody.innerHTML += row;
+        totalHours += record.duration;
+      });
+
+      const hourlyRate = 50000; // Contoh: Gaji per jam
+      const totalSalary = totalHours * hourlyRate;
+      document.getElementById("salaryEstimate").textContent = `Gaji Minggu Ini: Rp ${totalSalary.toLocaleString()}`;
+    }
+
+    // Logout functionality
+    document.getElementById("logoutButton").addEventListener("click", function () {
+      localStorage.clear();
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>

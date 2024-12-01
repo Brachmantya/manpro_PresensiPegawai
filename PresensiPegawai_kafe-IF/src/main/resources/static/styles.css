@@ -1,0 +1,103 @@
+/* Body Style */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f7f0e5, #e7dac9); /* Gradasi krem */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  /* Owner Dashboard Container */
+  .owner-dashboard-container {
+    background: #ffffff;
+    color: #4a3f35;
+    padding: 25px 35px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Bayangan lebih halus */
+    max-width: 700px;
+    width: 100%;
+    position: relative;
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+  }
+  
+  header h1 {
+    font-size: 26px;
+    color: #4a3f35;
+    margin: 0;
+  }
+  
+  /* Logout Button Style */
+  header .logout-btn {
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    background: #d2691e;
+    color: #fff;
+    border: none;
+    border-radius: 20px; /* Membuat tombol lebih melengkung */
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bayangan pada tombol */
+    transition: all 0.3s ease;
+  }
+  
+  header .logout-btn:hover {
+    background: #a0522d;
+    transform: scale(1.05); /* Efek zoom saat hover */
+  }
+  
+  header .logout-btn:active {
+    background: #8b4513;
+    transform: scale(0.95); /* Efek kecil saat tombol ditekan */
+  }
+  
+  main {
+    margin-top: 20px;
+  }
+  
+  section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fafafa; /* Warna latar belakang yang lembut */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Bayangan lembut */
+  }
+  
+  section h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #4a3f35;
+  }
+  
+  section button {
+    padding: 10px 15px;
+    font-size: 16px;
+    background: #d2691e;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  section button:hover {
+    background: #a0522d;
+    transform: scale(1.05); /* Efek zoom saat hover */
+  }
+  
+  section button:active {
+    background: #8b4513;
+    transform: scale(0.95); /* Efek kecil saat ditekan */
+  }
+  
