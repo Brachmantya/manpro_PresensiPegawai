@@ -1,0 +1,229 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* General Body */
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #f7f0e5, #e7dac9);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.owner-dashboard-container {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  width: 90%;
+}
+
+/* Header Styling */
+header {
+  display: flex;
+  justify-content: space-between; /* Menjaga jarak antara judul dan tombol logout */
+  align-items: center; /* Memastikan judul dan tombol logout sejajar secara vertikal */
+  padding: 20px;
+}
+
+header h1 {
+  font-size: 26px;
+  color: #4a3f35;
+  margin-right: auto; /* Memastikan judul berada di sebelah kiri */
+}
+
+/* Logout Button Styling */
+.logout-btn {
+  padding: 10px 20px;
+  background: #d2691e;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  
+}
+
+/* Section Styling */
+main section {
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fafafa;
+  border: 1px solid #ddd;
+}
+
+section h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #4a3f35;
+}
+
+section p {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+table th, table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+table th {
+  background: #d2691e;
+  color: white;
+}
+
+/* Buttons */
+.primary-btn {
+  padding: 10px 15px;
+  background: #d2691e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.secondary-btn {
+  padding: 5px 10px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.danger-btn {
+  padding: 5px 10px;
+  background: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Modal Styling */
+.modal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background: white;
+  margin: 10% auto;
+  padding: 20px;
+  width: 50%;
+  border-radius: 10px;
+}
+
+.user-info {
+  padding: 15px;
+  margin-bottom: 20px;
+  color: #4a3f35;
+  font-size: 20px;
+}
+
+/* Modal Content Styling */
+.modal-content {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  width: 50%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Rata kiri */
+  gap: 20px; /* Jarak antar elemen */
+  margin-top: 50px;
+}
+
+/* Form Group Styling */
+.form-group {
+  display: flex;
+  flex-direction: column; /* Susunan vertikal untuk label dan input */
+  gap: 8px; /* Jarak antara label dan input */
+  width: 100%;
+}
+
+.form-group label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #4a3f35;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+  width: 100%;
+  max-width: 100%; /* Lebar penuh form */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  background: #fff;
+  color: #333;
+}
+
+/* Textarea Styling */
+textarea {
+  resize: none; /* Nonaktifkan resize */
+  height: 60px; /* Tinggi fix */
+}
+
+/* Button Alignment */
+button.primary-btn {
+  align-self: center; /* Tombol berada di tengah */
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #d2691e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.primary-btn:hover {
+  background-color: #a0522d;
+}
+
+/* Form Vertikal */
+.form-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Jarak antar form-group */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Jarak antara label dan input */
+  width: 100%;
+}
+
+textarea,
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+
