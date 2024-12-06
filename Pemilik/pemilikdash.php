@@ -99,9 +99,9 @@ if (isset($_POST['logout'])) {
         </table>
       </section>
 
-      <!-- Laporan Gaji -->
+      <!-- Laporan Absen -->
       <section>
-        <h2>Laporan Gaji</h2>
+        <h2>Laporan Absen</h2>
         <br> 
 
         <!-- Form Filter -->
@@ -125,10 +125,8 @@ if (isset($_POST['logout'])) {
           <thead>
             <tr>
               <th>Nama Pegawai</th>
-              <th>Tanggal</th>
-              <th>Jumlah Hari Kerja</th>
-              <th>Jumlah Jam Kerja</th>
-              <th>Total Gaji (Rp)</th>
+              <th>Tanggal Masuk</th>
+              <th>Tanggal Pulang</th>
             </tr>
           </thead>
           <tbody>
@@ -138,20 +136,18 @@ if (isset($_POST['logout'])) {
             $endDate = isset($_GET['end_date']) ? $_GET['end_date'] : '';
             $searchName = isset($_GET['search_name']) ? $_GET['search_name'] : '';
 
-            // Query untuk laporan gaji dengan filter
+            // Query untuk laporan absen dengan filter
             $sql = "SELECT 
                         Pegawai.nama, 
-                        Laporan_Gaji.tanggal, 
-                        Laporan_Gaji.jml_hariKerja, 
-                        Laporan_Gaji.jml_jamKerja, 
-                        Laporan_Gaji.total_gaji
-                    FROM Laporan_Gaji
-                    JOIN Pegawai ON Laporan_Gaji.id_pegawai = Pegawai.id_pegawai
+                        Absen.waktu_masuk, 
+                        Absen.waktu_pulang
+                    FROM Absen
+                    JOIN Pegawai ON Absen.id_pegawai = Pegawai.id_pegawai
                     WHERE 1=1";
 
             // Filter berdasarkan rentang tanggal
             if ($startDate && $endDate) {
-                $sql .= " AND Laporan_Gaji.tanggal BETWEEN '$startDate' AND '$endDate'";
+                $sql .= " AND Absen.waktu_masuk BETWEEN '$startDate' AND '$endDate'";
             }
 
             // Filter berdasarkan nama pegawai
@@ -165,14 +161,12 @@ if (isset($_POST['logout'])) {
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>
                             <td>{$row['nama']}</td>
-                            <td>{$row['tanggal']}</td>
-                            <td>{$row['jml_hariKerja']}</td>
-                            <td>{$row['jml_jamKerja']}</td>
-                            <td>" . number_format($row['total_gaji'], 0, ',', '.') . "</td>
+                            <td>{$row['waktu_masuk']}</td>
+                            <td>{$row['waktu_pulang']}</td>
                           </tr>";
                 }
             } else {
-                echo "<tr><td colspan='5'>Tidak ada data</td></tr>";
+                echo "<tr><td colspan='3'>Tidak ada data</td></tr>";
             }
             ?>
           </tbody>

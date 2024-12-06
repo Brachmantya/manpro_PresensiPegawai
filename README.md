@@ -1,1 +1,0 @@
-# manpro_PresensiPegawai
